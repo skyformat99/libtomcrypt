@@ -80,7 +80,7 @@ int ecc_encrypt_key(const unsigned char *in,   unsigned long inlen,
     pubkeysize = ECC_BUF_SIZE;
 /* XXX-FIXME this is a hack: TFM does not support sqrtmod_prime */
 #ifdef USE_LTM
-    if ((err = ecc_get_key(pub_expt, &pubkeysize, PK_PUBLIC_COMPRESSED, &pubkey)) != CRYPT_OK) {
+    if ((err = ecc_get_key(pub_expt, &pubkeysize, PK_PUBLIC|PK_COMPRESSED, &pubkey)) != CRYPT_OK) {
 #else
     if ((err = ecc_get_key(pub_expt, &pubkeysize, PK_PUBLIC, &pubkey)) != CRYPT_OK) {
 #endif
