@@ -42,10 +42,10 @@ int pk_get_oid(int pk, oid_st *st)
       case PKA_DSA:
          XMEMCPY(st, &dsa_oid, sizeof(*st));
          break;
-      case PKA_EC:
+      case PKA_EC_OID:
          XMEMCPY(st, &ec_oid, sizeof(*st));
          break;
-      case EC_PRIME_FIELD:
+      case PKA_EC_PRIMEF:
          XMEMCPY(st, &ec_primef, sizeof(*st));
          break;
       default:

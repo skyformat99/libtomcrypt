@@ -36,7 +36,7 @@ int ecc_import_pkcs8(const unsigned char *in,  unsigned long inlen,
    LTC_ARGCHK(ltc_mp.name != NULL);
 
    /* get EC alg oid */
-   err = pk_get_oid(PKA_EC, &ecoid);
+   err = pk_get_oid(PKA_EC_OID, &ecoid);
    if (err != CRYPT_OK) { goto LBL_NOFREE; }
 
    /* alloc buffers */

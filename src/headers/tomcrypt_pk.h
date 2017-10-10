@@ -31,8 +31,8 @@ int rand_bn_upto(void *N, void *limit, prng_state *prng, int wprng);
 enum public_key_algorithms {
    PKA_RSA,
    PKA_DSA,
-   PKA_EC,
-   EC_PRIME_FIELD
+   PKA_EC_OID,
+   PKA_EC_PRIMEF
 };
 
 typedef struct Oid {
@@ -623,9 +623,6 @@ int der_decode_sequence_ex(const unsigned char *in, unsigned long  inlen,
 
 int der_length_sequence(ltc_asn1_list *list, unsigned long inlen,
                         unsigned long *outlen);
-int der_length_sequence_ex(ltc_asn1_list *list, unsigned long inlen,
-                           unsigned long *outlen, unsigned long *payloadlen);
-
 
 #ifdef LTC_SOURCE
 /* internal helper functions */

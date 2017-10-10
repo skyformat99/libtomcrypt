@@ -27,7 +27,7 @@ int ecc_import_openssl(const unsigned char *in, unsigned long inlen, ecc_key *ke
    /* ### 1. try to load public key - no curve parameters just curve OID */
 
    len_xy = sizeof(bin_xy);
-   err = der_decode_subject_public_key_info_ex(in, inlen, PKA_EC, bin_xy, &len_xy, LTC_ASN1_OBJECT_IDENTIFIER, curveoid, 16UL, &len_oid);
+   err = der_decode_subject_public_key_info_ex(in, inlen, PKA_EC_OID, bin_xy, &len_xy, LTC_ASN1_OBJECT_IDENTIFIER, curveoid, 16UL, &len_oid);
    if (err == CRYPT_OK) {
       /* load curve parameters for given curve OID */
       if ((err = ecc_set_dp_oid(curveoid, len_oid, key)) != CRYPT_OK) { goto error; }
@@ -56,7 +56,7 @@ int ecc_import_openssl(const unsigned char *in, unsigned long inlen, ecc_key *ke
    seq_curve[2].optional = 1;
    /* try to load public key */
    len_xy = sizeof(bin_xy);
-   err = der_decode_subject_public_key_info(in, inlen, PKA_EC, bin_xy, &len_xy, LTC_ASN1_SEQUENCE, seq_ecparams, 6);
+   err = der_decode_subject_public_key_info(in, inlen, PKA_EC_OID, bin_xy, &len_xy, LTC_ASN1_SEQUENCE, seq_ecparams, 6);
 
    if (err == CRYPT_OK) {
       len_a = seq_curve[0].size;

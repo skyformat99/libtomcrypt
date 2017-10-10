@@ -67,7 +67,7 @@ int ecc_export_openssl(unsigned char *out, unsigned long *outlen, int type, ecc_
   cofactor = key->dp.cofactor;
 
   /* we support only prime-field EC */
-  if ((err = pk_get_oid(EC_PRIME_FIELD, &oid)) != CRYPT_OK)                            goto error;
+  if ((err = pk_get_oid(PKA_EC_PRIMEF, &oid)) != CRYPT_OK)                            goto error;
 
   if (type & PK_CURVEOID) {
       /* from http://tools.ietf.org/html/rfc5912
@@ -161,7 +161,7 @@ int ecc_export_openssl(unsigned char *out, unsigned long *outlen, int type, ecc_
           }
       */
       err = der_encode_subject_public_key_info( out, outlen,
-                                                PKA_EC, bin_xy, len_xy,
+                                                PKA_EC_OID, bin_xy, len_xy,
                                                 asn_ecparams[0].type, asn_ecparams[0].data, asn_ecparams[0].size );
   }
 
