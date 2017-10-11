@@ -469,9 +469,19 @@ int _ecc_new_api(void)
       DO(ecc_set_key(buf, len, PK_PRIVATE, &privkey));
       len = sizeof(buf);
       DO(ecc_get_key(buf, &len, PK_PUBLIC, &privkey));
+      if (len != 1 + 2 * (unsigned long)dp->size) return CRYPT_FAIL_TESTVECTOR;
       /* load exported public key */
       DO(ecc_set_dp(dp, &pubkey));
       DO(ecc_set_key(buf, len, PK_PUBLIC, &pubkey));
+#ifndef USE_TFM
+      /* XXX-FIXME: TFM does not support sqrtmod_prime */
+      len = sizeof(buf);
+      DO(ecc_get_key(buf, &len, PK_PUBLIC|PK_COMPRESSED, &privkey));
+      if (len != 1 + (unsigned long)dp->size) return CRYPT_FAIL_TESTVECTOR;
+      /* load exported public+compressed key */
+      DO(ecc_set_dp(dp, &pubkey));
+      DO(ecc_set_key(buf, len, PK_PUBLIC, &pubkey));
+#endif
       /* test signature */
       len = sizeof(buf);
       DO(ecc_sign_hash(data16, 16, buf, &len, &yarrow_prng, find_prng ("yarrow"), &privkey));
