@@ -39,8 +39,8 @@ int ecc_set_dp(const ltc_ecc_set_type *set, ecc_key *key)
    key->dp.cofactor = set->cofactor;
    key->dp.size = set->size;
    /* OID */
-   key->dp.oid.OIDlen = set->oid.OIDlen;
-   for (i = 0; i < key->dp.oid.OIDlen; i++) key->dp.oid.OID[i] = set->oid.OID[i];
+   key->dp.oid.OIDlen = set->oidlen;
+   for (i = 0; i < key->dp.oid.OIDlen; i++) key->dp.oid.OID[i] = set->oid[i];
    /* success */
    return CRYPT_OK;
 
