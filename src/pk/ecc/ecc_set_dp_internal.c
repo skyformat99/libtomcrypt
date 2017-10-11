@@ -19,8 +19,8 @@ int ecc_set_dp_oid(unsigned long *oid, unsigned long oidsize, ecc_key *key)
    LTC_ARGCHK(oidsize > 0);
 
    for(i = 0; ltc_ecc_sets[i].size != 0; i++) {
-      if ((oidsize == ltc_ecc_sets[i].oid.OIDlen) &&
-          (XMEM_NEQ(oid, ltc_ecc_sets[i].oid.OID, sizeof(unsigned long) * ltc_ecc_sets[i].oid.OIDlen) == 0)) {
+      if ((oidsize == ltc_ecc_sets[i].oidlen) &&
+          (XMEM_NEQ(oid, ltc_ecc_sets[i].oid, sizeof(unsigned long) * ltc_ecc_sets[i].oidlen) == 0)) {
          break;
       }
    }

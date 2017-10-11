@@ -281,8 +281,9 @@ typedef struct {
    /** The co-factor */
    unsigned long cofactor;
 
-   /** The OID stucture */
-   oid_st oid;
+   /** The OID */
+   unsigned long oid[16];
+   unsigned long oidlen;
 } ltc_ecc_set_type;
 
 /** A point on a ECC curve, stored in Jacbobian format such that (x,y,z) => (x/z^2, y/z^3, 1) when interpretted as affine */
