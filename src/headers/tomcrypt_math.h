@@ -374,7 +374,7 @@ typedef struct {
        @param k   The integer to multiply the point by
        @param G   The point to multiply
        @param R   The destination for kG
-       @param a   ECC curve parameter a (if NULL we assume a == -3)
+       @param a   ECC curve parameter a
        @param modulus  The modulus for the field
        @param map Boolean indicated whether to map back to affine or not
                   (can be ignored if you work in affine only)
@@ -391,7 +391,7 @@ typedef struct {
        @param P    The first point
        @param Q    The second point
        @param R    The destination of P + Q
-       @param a    ECC curve parameter a (if NULL we assume a == -3)
+       @param a    ECC curve parameter a
        @param modulus  The modulus
        @param mp   The "b" value from montgomery_setup()
        @return CRYPT_OK on success
@@ -406,7 +406,7 @@ typedef struct {
    /** ECC GF(p) point double
        @param P    The first point
        @param R    The destination of 2P
-       @param a    ECC curve parameter a (if NULL we assume a == -3)
+       @param a    ECC curve parameter a
        @param modulus  The modulus
        @param mp   The "b" value from montgomery_setup()
        @return CRYPT_OK on success
