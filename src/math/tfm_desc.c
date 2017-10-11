@@ -484,17 +484,17 @@ static int tfm_ecc_projective_dbl_point(const ecc_point *P, ecc_point *R, void *
    /* T2 = X * X */
    fp_sqr(R->x, &t2);
    fp_montgomery_reduce(&t2, modulus, mp);
-   /* T1 = T2 + T1 */
+   /* T1 = T1 + T2 */
    fp_add(&t1, &t2, &t1);
    if (fp_cmp(&t1, modulus) != FP_LT) {
       fp_sub(&t1, modulus, &t1);
    }
-   /* T1 = T2 + T1 */
+   /* T1 = T1 + T2 */
    fp_add(&t1, &t2, &t1);
    if (fp_cmp(&t1, modulus) != FP_LT) {
       fp_sub(&t1, modulus, &t1);
    }
-   /* T1 = T2 + T1 */
+   /* T1 = T1 + T2 */
    fp_add(&t1, &t2, &t1);
    if (fp_cmp(&t1, modulus) != FP_LT) {
       fp_sub(&t1, modulus, &t1);

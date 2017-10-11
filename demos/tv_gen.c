@@ -656,7 +656,6 @@ void ecc_gen(void)
    mp_init(&a);
 
    for (x = 0; ltc_ecc_sets[x].size != 0; x++) {
-
         fprintf(out, "%s\n", ltc_ecc_sets[x].name);
         mp_set(k, 1);
 
