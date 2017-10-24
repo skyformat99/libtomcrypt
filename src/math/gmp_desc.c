@@ -360,7 +360,6 @@ static int sqrtmod_prime(void *n, void *prime, void *ret)
    /* M = S */
    mpz_set_ui(two, 2);
 
-   res = CRYPT_ERROR;
    while (1) {
       mpz_set(t1, T);
       i = 0;

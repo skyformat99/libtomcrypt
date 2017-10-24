@@ -459,37 +459,48 @@ int _ecc_new_api(void)
       ecc_free(&pubkey);
       len = sizeof(buf);
       DO(ecc_ansi_x963_export(&key, buf, &len));
+      ecc_free(&key);
       DO(ecc_ansi_x963_import_ex(buf, len, &pubkey, dp));
       ecc_free(&pubkey);
+
       /* generate new key */
       DO(ecc_set_dp(dp, &key));
       DO(ecc_generate_key(&yarrow_prng, find_prng ("yarrow"), &key));
       len = sizeof(buf);
       DO(ecc_get_key(buf, &len, PK_PRIVATE, &key));
+      ecc_free(&key);
+
       /* load exported private key */
       DO(ecc_set_dp(dp, &privkey));
       DO(ecc_set_key(buf, len, PK_PRIVATE, &privkey));
-      len = sizeof(buf);
-      DO(ecc_get_key(buf, &len, PK_PUBLIC, &privkey));
-      if (len != 1 + 2 * (unsigned long)dp->size) return CRYPT_FAIL_TESTVECTOR;
-      /* load exported public key */
-      DO(ecc_set_dp(dp, &pubkey));
-      DO(ecc_set_key(buf, len, PK_PUBLIC, &pubkey));
+
 #ifndef USE_TFM
       /* XXX-FIXME: TFM does not support sqrtmod_prime */
+      /* export compressed public key */
       len = sizeof(buf);
       DO(ecc_get_key(buf, &len, PK_PUBLIC|PK_COMPRESSED, &privkey));
       if (len != 1 + (unsigned long)dp->size) return CRYPT_FAIL_TESTVECTOR;
       /* load exported public+compressed key */
       DO(ecc_set_dp(dp, &pubkey));
       DO(ecc_set_key(buf, len, PK_PUBLIC, &pubkey));
+      ecc_free(&pubkey);
 #endif
+
+      /* export long public key */
+      len = sizeof(buf);
+      DO(ecc_get_key(buf, &len, PK_PUBLIC, &privkey));
+      if (len != 1 + 2 * (unsigned long)dp->size) return CRYPT_FAIL_TESTVECTOR;
+      /* load exported public key */
+      DO(ecc_set_dp(dp, &pubkey));
+      DO(ecc_set_key(buf, len, PK_PUBLIC, &pubkey));
+
       /* test signature */
       len = sizeof(buf);
       DO(ecc_sign_hash(data16, 16, buf, &len, &yarrow_prng, find_prng ("yarrow"), &privkey));
       stat = 0;
       DO(ecc_verify_hash(buf, len, data16, 16, &stat, &pubkey));
       if (stat != 1) return CRYPT_FAIL_TESTVECTOR;
+
       /* test encryption */
       len = sizeof(buf);
       DO(ecc_encrypt_key(data16, 16, buf, &len, &yarrow_prng, find_prng("yarrow"), find_hash("sha256"), &pubkey));
@@ -498,8 +509,8 @@ int _ecc_new_api(void)
       DO(ecc_decrypt_key(buf, len, data16, &len16, &privkey));
       if (len16 != 16) return CRYPT_FAIL_TESTVECTOR;
       for (j = 0; j < 16; j++) if (data16[j] != 0xd1) return CRYPT_FAIL_TESTVECTOR;
+
       /* cleanup */
-      ecc_free(&key);
       ecc_free(&privkey);
       ecc_free(&pubkey);
    }
